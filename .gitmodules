@@ -1,0 +1,4 @@
+[submodule "src/3.Execution/ALU"]
+	path = src/3.Execution/ALU
+	url = git@github.com:Daedalus-op/ALU.git
+	branch = sys_ver
