@@ -1,3 +1,5 @@
 *.vcd
 *.out
 work/
+play/
+vsim.wlf

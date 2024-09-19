@@ -1,15 +1,13 @@
-`include "rca.v"
-
 module rca_add #(
     parameter N = 4
 ) (
-    input [N-1:0] a,
-    input [N-1:0] b,
-    output [N-1:0] s,
-    output ovf
+    input logic [N-1:0] a,
+    input logic [N-1:0] b,
+    output logic [N-1:0] s,
+    output bit ovf
 );
 
-  wire [N:0] c;
+  logic [N:0] c;
   assign c[0] = 0;
   genvar i;
   for (i = 0; i < N; i = i + 1) begin
