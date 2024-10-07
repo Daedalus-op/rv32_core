@@ -1,16 +1,18 @@
 module register (
-    inout logic [31:0] data,
-    input bit clk,
+    output logic [31:0] rdata,
+    input logic [31:0] wdata,
     input logic [4:0] regno,
-    input bit rw
+    input bit clk,
+    input bit RegRead,
+    input bit RegWrite
 );
-    logic [31:0] regarr [31:0];
+    logic [31:0] regarr [4:0];
     always@(posedge clk) begin
-        if (rw == 0)
-            data <= regarr[regno];
-        else if (rw == 1)
-            regarr[regno] <= data;
+        if (RegRead == 1)
+            rdata <= regarr[regno];
+        else if (RegWrite == 1)
+            regarr[regno] <= wdata;
         else 
-            data <= 'bx;
+            rdata <= 'bx;
     end
 endmodule
