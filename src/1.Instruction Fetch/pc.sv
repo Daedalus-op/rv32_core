@@ -7,10 +7,14 @@ module pc(
 	);
 
 	logic [2:0] offset = 3'd4;
+	
+	initial new_addr <= 32'b0;
+	
 	always@(posedge clk) begin
-		if (PCsrc == 0) // default offset - 4
-			new_addr <= old_addr + offset;
-		else if (PCsrc == 1) // branch statements
-			new_addr <= branch_addr;
+	   case(PCsrc)
+	   1'b0: new_addr <= old_addr + offset;
+	   1'b1: new_addr <= branch_addr;
+	   default: new_addr <= 'b0;
+	   endcase
 	end
 endmodule
