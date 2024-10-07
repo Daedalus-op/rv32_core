@@ -6,7 +6,7 @@ module register (
     input bit RegRead,
     input bit RegWrite
 );
-    logic [31:0] regarr [4:0];
+    logic [31:0] regarr [31:0];
     always@(posedge clk) begin
         if (RegRead == 1)
             rdata <= regarr[regno];
