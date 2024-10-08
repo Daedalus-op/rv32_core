@@ -1,4 +1,4 @@
-module top;
+module pc_top;
 logic [31:0] new_addr;
 logic [31:0] old_addr;
 logic [31:0] branch_addr;
