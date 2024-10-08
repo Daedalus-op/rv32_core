@@ -1,6 +1,6 @@
 // Code your testbench here
 // or browse Examples
-module top;
+module reg_top;
 logic [31:0] wdata;
 logic [31:0] rdata;
 bit clk;
