@@ -3,3 +3,5 @@
 work/
 play/
 vsim.wlf
+vivado*
+.Xil/
