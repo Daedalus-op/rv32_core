@@ -22,7 +22,7 @@ program IF_tb (
     int good = 0, bad = 0;
     logic [31:0] prev_addr;
 
-    assign PCsrc = 1;
+    assign PCsrc = 0;
     logic [31:0] tb_inst;
 
     initial begin
