@@ -1,44 +1,40 @@
-class testing;
-static logic [39:0][7:0] instruction = {
-		8'h12, 8'h34, 8'h56, 8'h78,
-		8'h9a, 8'hbc, 8'hde, 8'hf0,
-		8'h12, 8'h34, 8'h56, 8'h78,
-		8'h9a, 8'hbc, 8'hde, 8'hf0,
-		8'h12, 8'h34, 8'h56, 8'h78,
-		8'h9a, 8'hbc, 8'hde, 8'hf0,
-		8'h12, 8'h34, 8'h56, 8'h78,
-		8'h9a, 8'hbc, 8'hde, 8'hf0,
-		8'h12, 8'h34, 8'h56, 8'h78,
-		8'h9a, 8'hbc, 8'hde, 8'hf0
-	};
-	
-endclass
-
-module IF (
-	output logic [31:0] instruction,
-	input bit PCsrc,
-	input logic [31:0] branch_addr,
-	output logic [31:0] new_addr,
-	input logic clk
+module Decoder(
+    input  logic [31:0] instruction, // 32-bit instruction
+    output logic [6:0]  opcode,      // Opcode field
+    output logic [4:0]  rd,          // Destination register
+    output logic [2:0]  funct3,      // Funct3 field
+    output logic [4:0]  rs1,         // Source register 1
+    output logic [4:0]  rs2,         // Source register 2
+    output logic [6:0]  funct7      // Funct7 field (for R-type)
 );
-	logic [31:0] old_addr = 0;
-	
-	pc program_count(new_addr, old_addr, branch_addr, PCsrc, clk);
-	ins_mem code_mem(instruction, new_addr, clk);
-
-	always_ff@(posedge clk) old_addr <= new_addr;
-    
-endmodule
-
-module ins_mem ( // instruction memory
-	output logic [31:0] instruction,
-	input logic [31:0] address,
-	input logic clk
-);
-	
-	always_ff @( posedge clk ) begin
-        testing tb;
-        tb = new;
-        instruction = {tb.instruction[address+3],tb.instruction[address+2],tb.instruction[address+1],tb.instruction[address]};
-	end
+assign opcode=instruction[6:0];
+always_comb
+    case(opcode)
+        7'b0110011:                //this is for R type
+            begin
+                 rd=instruction[11:7];
+                 funct3=instruction[14:12];
+                 rs1=instruction[19:15];
+                 rs2=instruction[24:20];
+                 funct7=instruction[31:25];
+             end
+        7'b00000011 || 7'b0010011:        // this is for load and I Type , doubt for shift
+         begin  
+                 rd=instruction[11:7];
+                 funct3=instruction[14:12];
+                 rs1=instruction[19:15];         
+         end
+        7'b0100011:
+        begin     // store
+         funct3=instruction[14:12];
+         rs1=instruction[19:15];
+         rs2=instruction[24:20];
+        end
+        7'b1100011:
+        begin              
+                 funct3=instruction[14:12];
+                 rs1=instruction[19:15];
+                 rs2=instruction[24:20];
+        end      
+          endcase
 endmodule
