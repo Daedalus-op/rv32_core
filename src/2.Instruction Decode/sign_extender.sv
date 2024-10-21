@@ -1,7 +1,7 @@
 
-module Sign_extend1(
-        input logic [31:0] instruction,
-        output logic [31:0]imm
+module sign_extend(
+        output logic [31:0]imm,
+        input logic [31:0] instruction
     );
 assign opcode=instruction[6:0];
 always_comb
