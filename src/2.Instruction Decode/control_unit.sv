@@ -68,53 +68,53 @@ always_comb begin
 	outs = {RegWrite, MemRead, MemWrite, branch, ALUsrc, MemToReg, ALUop};
 	// Check for which opcode
 	case (opcode)
-		tb_opcode["I_J"] : outs = 8'b0;
-		tb_opcode["I_L"] : begin
+		tb_opcode["I_J"] : outs = 8'b0; // I jump
+		tb_opcode["I_L"] : begin  // I load
 		case(func3) 
-			tb_func3["lb"]  : outs = 8'b1100_11;
-			tb_func3["lh"]  : outs = 8'b1100_11;
-			tb_func3["lw"]  : outs = 8'b1100_11;
-			tb_func3["lbu"] : outs = 8'b1100_11;
-			tb_func3["lhu"] : outs = 8'b1100_11;
+			tb_func3["lb"]  : outs = 8'b1100_1100;
+			tb_func3["lh"]  : outs = 8'b1100_1100;
+			tb_func3["lw"]  : outs = 8'b1100_1100;
+			tb_func3["lbu"] : outs = 8'b1100_1100;
+			tb_func3["lhu"] : outs = 8'b1100_1100;
 		endcase
 		end
-		tb_opcode["I_A"] : begin
+		tb_opcode["I_A"] : begin  // I arithmetic
 		case(func3)
-			tb_func3["addi"]  : outs = 8'b0;
-			tb_func3["slti"]  : outs = 8'b0;
-			tb_func3["sltiu"] : outs = 8'b0;
-			tb_func3["xori"]  : outs = 8'b0;
-			tb_func3["ori"]   : outs = 8'b0;
-			tb_func3["xori"]  : outs = 8'b0;
+			tb_func3["addi"]  : outs = 8'b1000_1000;
+			tb_func3["slti"]  : outs = 8'b1000_1011;
+			tb_func3["sltiu"] : outs = 8'b1000_1011;
+			tb_func3["xori"]  : outs = 8'b1000_1010;
+			tb_func3["ori"]   : outs = 8'b1000_1001;
+			tb_func3["xori"]  : outs = 8'b1000_1011;
 			tb_func3["shift"] : begin
 			case(func7)
-				tb_func7["slli"] : outs = 8'b0;
-				tb_func7["srli"] : outs = 8'b0;
-				tb_func7["srai"] : outs = 8'b0;
+				tb_func7["slli"] : outs = 8'b1000_1001;
+				tb_func7["srli"] : outs = 8'b1000_1001;
+				tb_func7["srai"] : outs = 8'b1000_1001;
 			endcase
 			end
 		endcase
 		end
 
 		tb_opcode["U_lui"]   : outs = 8'b0;
-		tb_opcode["U_auipc"] : outs = 8'b0;
+		tb_opcode["U0_auipc"] : outs = 8'b0;
 		tb_opcode["J"]       : outs = 8'b0;
 		tb_opcode["B"]       : begin
 		case(func3) 
-			tb_func3["beq"]  : outs = 8'b0;
-			tb_func3["bne"]  : outs = 8'b0;
-			tb_func3["blt"]  : outs = 8'b0;
-			tb_func3["bge"]  : outs = 8'b0;
-			tb_func3["bltu"] : outs = 8'b0;
-			tb_func3["bgeu"] : outs = 8'b0;
+			tb_func3["beq"]  : outs = 8'b0001_0X01;
+			tb_func3["bne"]  : outs = 8'b0001_0X01;
+			tb_func3["blt"]  : outs = 8'b0001_0X10;
+			tb_func3["bge"]  : outs = 8'b0001_0X10;
+			tb_func3["bltu"] : outs = 8'b0001_0X11;
+			tb_func3["bgeu"] : outs = 8'b0001_0X11;
 		endcase
 		end
 
 		tb_opcode["S"] : begin
 		case(func3)
-			tb_func3["sb"] : outs = 8'b0;
-			tb_func3["sh"] : outs = 8'b0;
-			tb_func3["sw"] : outs = 8'b0;
+			tb_func3["sb"] : outs = 8'b0010_1X00;
+			tb_func3["sh"] : outs = 8'b0010_1X00;
+			tb_func3["sw"] : outs = 8'b0010_1X00;
 		endcase
 		end
 
