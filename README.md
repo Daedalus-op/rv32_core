@@ -7,12 +7,12 @@
 # Status
 - [x] Instruction Fetch
 	- [x] Design
-	- [ ] Testing
+	- [.] Testing
 - [ ] Instruction Decode
-	- [ ] Design
+	- [.] Design
 	- [ ] Testing
 - [ ] Execution
-	- [ ] Design
+	- [x] Design
 	- [ ] Testing
 - [ ] Memory Access
 	- [ ] Design

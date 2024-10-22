@@ -1,6 +1,6 @@
 
 module IF (
-	output logic [31:0] instruction,
+	output logic [31:0] instruction, new_addr,
 	input bit PCsrc,
 	input logic [31:0] branch_addr,
 	input logic clk
