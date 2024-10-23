@@ -5,7 +5,6 @@ module IF (
 	input logic [31:0] branch_addr,
 	input logic clk
 );
-    logic [31:0] new_addr;
 	logic [31:0] old_addr;
 	
 	pc program_count(new_addr, old_addr, branch_addr, PCsrc, clk);
