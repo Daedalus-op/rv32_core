@@ -6,7 +6,7 @@ module EX (
     input bit AluSrc, pc_relative
 );
     logic [31:0] r1, r2;
-    mux mux1(r1, AluSrc, imm, rs1);
-    mux mux2(r2, pc_relative, pc, rs2);
+    mux mux1(r1, AluSrc, rs1, imm);
+    mux mux2(r2, pc_relative, rs2, pc);
     alu #(32) alu_unit(AluOut, zero, clk, AluOp, r1, r2);
 endmodule

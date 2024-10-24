@@ -9,14 +9,14 @@
 	- [x] Design
 	- [.] Testing
 - [ ] Instruction Decode
-	- [.] Design
+	- [x] Design
 	- [ ] Testing
 - [ ] Execution
 	- [x] Design
 	- [ ] Testing
 - [ ] Memory Access
-	- [ ] Design
+	- [x] Design
 	- [ ] Testing
 - [ ] Write Back
-	- [ ] Design
+	- [x] Design
 	- [ ] Testing

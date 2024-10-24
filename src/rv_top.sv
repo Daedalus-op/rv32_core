@@ -1,17 +1,24 @@
 module rv_top (
-    input logic PCsrc, clk
+    output logic [31:0] out,
+    input logic clk
 );
-    logic [31:0] instruction, rs1, rs2, immediate, pc, AluOut;
+    logic [31:0] instruction, rs1, rs2, immediate, pc, AluOut, wb_data, MemData;
     logic [6:0] opcode, func7;
-    logic RegWrite, MemRead, MemWrite, branch, AluSrc, MemToReg;
+    logic RegWrite, MemRead, MemWrite, branch, AluSrc, MemToReg, Op_sel, pc_branch, zero;
     logic [1:0] AluOp;
     logic [2:0] func3;
     logic [4:0] rd;
     IF u_if (instruction, pc,
-	    PCsrc, AluOut, clk);
-    ID u_id (rs1, rs2, rd, immediate, opcode, func7, func3,
-	    RegWrite, MemRead, MemWrite,  branch, AluSrc, MemToReg, AluOp,
-	    AluOut, instruction);
+	    pc_branch, wb_data, clk);
+    ID u_id (rs1, rs2, immediate,
+	    MemRead, MemWrite,  branch, AluSrc, MemToReg, Op_sel, AluOp,
+	    wb_data, instruction);
     EX u_ex (AluOut, zero,
-	    pc, rs1, rs2, immediate, AluOp, AluSrc, 1'b0);
+	    pc, rs1, rs2, immediate, AluOp, AluSrc, Op_sel);
+    MA u_ma(MemData,
+        AluOut, AluOut, MemRead, MemWrite);
+    WB u_wb(wb_data,
+        AluOut, MemData, MemToReg);
+    assign out = wb_data;
+    assign pc_branch = zero & branch;
 endmodule
