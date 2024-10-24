@@ -10,8 +10,10 @@ module ID (
     input  logic [31:0] instruction
 );
 logic [4:0] rs1, rs2;
-decoder 	decode		(opcode, rd, func3, rs1, rs2, func7, instruction);
+logic [11:0] imm_in, imm_out;
+decoder 	decode		(opcode, rd, func3, rs1, rs2, func7, imm_in, instruction);
 register 	register_file	(r1, r2, wb_data, rs1, rs2, rd, RegWrite);
-sign_extend 	sign_ext	(immediate, instruction);
+sign_extend 	sign_ext	(immediate, imm_in, opcode);
 CU 		u_cu		(RegWrite, MemRead, MemWrite,  branch, ALUsrc, MemToReg, ALUop, func7, func3, opcode);
+// ALU_CU	u_alucu		();
 endmodule
