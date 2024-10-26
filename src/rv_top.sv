@@ -10,9 +10,10 @@ module rv_top (
     logic [4:0] rd;
     IF u_if (instruction, pc,
 	    pc_branch, wb_data, clk);
-    ID u_id (rs1, rs2, immediate,
-	    MemRead, MemWrite,  branch, AluSrc, MemToReg, Op_sel, AluOp,
-	    wb_data, instruction);
+    ID u_id (opcode, func7, func3, rs1, rs2, immediate,
+	    RegWrite, wb_data, instruction);
+    CU u_cu (RegWrite, MemRead, MemWrite,  branch, AluSrc, MemToReg, Op_sel, AluOp,
+	    func7, func3, opcode);
     EX u_ex (AluOut, zero,
 	    pc, rs1, rs2, immediate, AluOp, AluSrc, Op_sel);
     MA u_ma(MemData,
