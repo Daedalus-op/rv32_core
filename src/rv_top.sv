@@ -5,7 +5,7 @@ module rv_top (
     logic [31:0] instruction, rs1, rs2, immediate, pc, AluOut, wb_data, MemData;
     logic [6:0] opcode, func7;
     logic RegWrite, MemRead, MemWrite, branch, AluSrc, MemToReg, Op_sel, pc_branch, zero;
-    logic [1:0] AluOp;
+    logic [3:0] AluOp;
     logic [2:0] func3;
     logic [4:0] rd;
     IF u_if (instruction, pc,
@@ -17,7 +17,7 @@ module rv_top (
     EX u_ex (AluOut, zero,
 	    pc, rs1, rs2, immediate, AluOp, AluSrc, Op_sel);
     MA u_ma(MemData,
-        AluOut, AluOut, MemRead, MemWrite);
+        rs2, AluOut, MemRead, MemWrite);
     WB u_wb(wb_data,
         AluOut, MemData, MemToReg);
     assign out = wb_data;

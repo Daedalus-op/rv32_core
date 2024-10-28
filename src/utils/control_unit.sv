@@ -1,65 +1,66 @@
 module CU (
-    output logic RegWrite, MemRead, MemWrite,  branch, ALUsrc, MemToReg, Op_sel,
-    output logic [1:0] ALUop,
+    output logic RegWrite, MemRead, MemWrite,  branch, ALUsrc, MemToReg, OpSel,
+    output logic [3:0] ALUop,
     input logic [6:0] func7,
     input logic [2:0] func3,
     input logic [6:0] opcode
 );
 logic [7:0] outs;
 
-assign {RegWrite, MemRead, MemWrite, branch, ALUsrc, MemToReg, Op_sel, ALUop} = outs;
+assign {RegWrite, MemRead, MemWrite,
+       branch, ALUsrc, MemToReg, OpSel,
+       ALUop} = outs;
 
 always_comb begin
-	outs = {RegWrite, MemRead, MemWrite, branch, ALUsrc, MemToReg, Op_sel, ALUop};
-	
 	// Check for which opcode
 	case (opcode)
 		7'b110_0111 : outs = 8'b0; // I jump
 		7'b000_0011 : begin  // I load
 		case(func3) 
-			3'b000 : outs = 9'b1_1100_1100; // lb 
-			3'b001 : outs = 9'b1_1100_1100; // lh 
-			3'b010 : outs = 9'b1_1100_1100; // lw 
-			3'b100 : outs = 9'b1_1100_1100; // lbu
-			3'b101 : outs = 9'b1_1100_1100; // lhu
+			3'b000 : outs = 11'b110_0010_0000; // lb 
+			3'b001 : outs = 11'b110_0010_0000; // lh 
+			3'b010 : outs = 11'b110_0010_0000; // lw 
+			3'b100 : outs = 11'b110_0010_0000; // lbu
+			3'b101 : outs = 11'b110_0010_0000; // lhu
 		endcase
 		end
 		7'b001_0011 : begin  // I arithmetic
 		case(func3)
-			3'b000 : outs = 9'b1_1000_1000; // addi 
-			3'b010 : outs = 9'b1_1000_1011; // slti 
-			3'b011 : outs = 9'b1_1000_1011; // sltiu
-			3'b100 : outs = 9'b1_1000_1010; // xori 
-			3'b110 : outs = 9'b1_1000_1001; // ori  
-			3'b111 : outs = 9'b1_1000_1011; // andi 
+			3'b000 : outs = 11'b100_0100_0000; // addi 
+			3'b010 : outs = 11'b100_0100_0001; // slti 
+			3'b011 : outs = 11'b100_0100_0001; // sltiu
+			3'b100 : outs = 11'b100_0100_0100; // xori 
+			3'b110 : outs = 11'b100_0100_0011; // ori  
+			3'b111 : outs = 11'b100_0100_0010; // andi 
 			3'b001 : begin // shift immediate
-			case(func7)
-				7'b000_0000 : outs = 9'b1_1000_1001; // s_li
-				7'b010_0000 : outs = 9'b1_1000_1001; // srai
+// #TODO
+			case(func7)  
+				7'b000_0000 : outs = 11'b100_0010_0101; // s_li
+				7'b010_0000 : outs = 11'b100_0010_0111; // srai
 			endcase
 			end
 		endcase
 		end
 
-		7'b011_0111 : outs = 9'b1_0; // lui
-		7'b001_0111 : outs = 9'b1_0; // auipc
-		7'b110_1111 : outs = 9'b1_0; // jal
+		7'b011_0111 : outs = 11'b1_0; // lui
+		7'b001_0111 : outs = 11'b1_0; // auipc
+		7'b110_1111 : outs = 11'b1_0; // jal
 		7'b110_0011 : begin // branch
 		case(func3) 
-			3'b000 : outs = 9'b1_0001_0X01; // beq 
-			3'b001 : outs = 9'b1_0001_0X01; // bne 
-			3'b100 : outs = 9'b1_0001_0X10; // blt 
-			3'b101 : outs = 9'b1_0001_0X10; // bge 
-			3'b110 : outs = 9'b1_0001_0X11; // bltu
-			3'b111 : outs = 9'b1_0001_0X11; // bgeu
+			3'b000 : outs = 11'b100_010X_0001; // beq 
+			3'b001 : outs = 11'b100_010X_0001; // bne 
+			3'b100 : outs = 11'b100_010X_0001; // blt 
+			3'b101 : outs = 11'b100_010X_0001; // bge 
+			3'b110 : outs = 11'b100_010X_0001; // bltu
+			3'b111 : outs = 11'b100_010X_0001; // bgeu
 		endcase
 		end
 
 		7'b010_0011 : begin // store
 		case(func3)
-			3'b000 : outs = 9'b1_0010_1X00; // sb
-			3'b001 : outs = 9'b1_0010_1X00; // sh
-			3'b010 : outs = 9'b1_0010_1X00; // sw
+			3'b000 : outs = 11'b100_101X_0000; // sb
+			3'b001 : outs = 11'b100_101X_0000; // sh
+			3'b010 : outs = 11'b100_101X_0000; // sw
 		endcase
 		end
 
@@ -67,36 +68,28 @@ always_comb begin
 		case(func3)
 			3'b000  : begin // add or sub
 			case(func7)
-				7'b000_0000 : outs = 9'b1_0; // add
-				7'b010_0000 : outs = 9'b1_0; // sub
+				7'b000_0000 : outs = 11'b1_0000; // add
+				7'b010_0000 : outs = 11'b1_0001; // sub
 			endcase
 			end
 
-			3'b001 : outs = 9'b1_0; // sll 
-			3'b010 : outs = 9'b1_0; // slt 
-			3'b011 : outs = 9'b1_0; // sltu
-			3'b100 : outs = 9'b1_0; // xor
+			3'b001 : outs = 11'b1_0001; // sll 
+			3'b010 : outs = 11'b1_0001; // slt 
+			3'b011 : outs = 11'b1_0001; // sltu
+			3'b100 : outs = 11'b1_0001; // xor
 			3'b101 : begin // shift right
 			case(func7)
-				7'b000_0000 : outs = 9'b1_0; // srl
-				7'b010_0000 : outs = 9'b1_0; // sra
+				7'b000_0000 : outs = 11'b1_0110; // srl
+				7'b010_0000 : outs = 11'b1_0111; // sra
 			endcase
 			end
 
-			3'b110  : outs = 9'b1_0; // or
-			3'b111  : outs = 9'b1_0; // and
+			3'b110  : outs = 11'b1_0011; // or
+			3'b111  : outs = 11'b1_0010; // and
 		endcase
 		end
 		default: outs = 8'b0000_0000;
 	endcase
 end
     
-endmodule
-
-
-module ALU_CU (
-	output logic [3:0] ALU_opcode,
-	input logic [1:0] ALU_op
-	);
-	
 endmodule

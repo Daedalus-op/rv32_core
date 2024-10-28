@@ -5,7 +5,7 @@ module memory (
     input bit MemRead,
     input bit MemWrite
 );
-    logic [31:0] memarr [1023:0];
-    always@(posedge MemRead) rdata <= memarr[address];
-    always@(posedge MemWrite) memarr[address] <= wdata;
+    logic [7:0] memarr [1023:0];
+    always@(MemRead) rdata <= {memarr[address],memarr[address+1],memarr[address+2],memarr[address+3]};
+    always@(MemWrite) {memarr[address],memarr[address+1],memarr[address+2],memarr[address+3]} <= wdata;
 endmodule
