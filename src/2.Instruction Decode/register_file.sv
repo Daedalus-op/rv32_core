@@ -9,6 +9,7 @@ module register (
         if (RegWrite == 1)
             regarr[rd] <= wdata;
     end
+    assign regarr[0] = 'b0;
 
     assign r1 = regarr[rs1];
     assign r2 = regarr[rs2];

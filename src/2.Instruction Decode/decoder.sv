@@ -19,11 +19,17 @@ always_comb
                  rs2=instruction[24:20];
                  funct7=instruction[31:25];
              end
-        7'b00000011 || 7'b0010011:        // this is for load and I Type , doubt for shift
+        7'b0000011: 
          begin  
                  rd=instruction[11:7];
                  funct3=instruction[14:12];
-                 rs1=instruction[19:15];         
+                 rs1=instruction[19:15];
+         end
+        7'b0010011:        // this is for load and I Type , doubt for shift
+         begin  
+                 rd=instruction[11:7];
+                 funct3=instruction[14:12];
+                 rs1=instruction[19:15];
          end
         7'b0100011:
         begin     // store

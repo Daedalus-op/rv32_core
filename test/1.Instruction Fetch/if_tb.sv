@@ -16,37 +16,36 @@ endclass
 
 module IF_tb_top;
 logic [31:0] instruction;
-logic [31:0] addr;
 bit PCsrc;
-logic [31:0] curr_addr;
+logic [31:0] curr_addr, branch_addr;
 bit clk;
 
 always #5 clk = ~clk;
 
-IF dut(instruction, PCsrc, addr, clk);
-IF_tb tb(instruction, PCsrc, addr, curr_addr, clk);
+IF dut(instruction, curr_addr, PCsrc, branch_addr, clk);
+IF_tb tb(instruction, PCsrc, branch_addr, curr_addr, clk);
 
 endmodule
 
 program IF_tb (
 	input logic [31:0] instruction,
 	output bit PCsrc,
-	output logic [31:0] addr,
+	output logic [31:0] branch_addr,
 	input logic [31:0] curr_addr,
 	input logic clk
 	);
     int good = 0, bad = 0;
     logic [31:0] prev_addr;
 
-    assign PCsrc = 0;
+    assign PCsrc = 1;
     logic [31:0] tb_inst;
 
     initial begin
         testing tb;
         tb = new;
         for(int i = 0; i < 10; i++) begin
-            addr = i*4;
-            prev_addr = addr;
+            branch_addr = i*4;
+            prev_addr = branch_addr;
             @(posedge clk);
                 tb_inst = {tb.instruction[prev_addr+3],tb.instruction[prev_addr+2],tb.instruction[prev_addr+1],tb.instruction[prev_addr]};
                 if(instruction == tb_inst) begin
@@ -60,3 +59,25 @@ program IF_tb (
          $display("Pass vs Fail :- %0d, %0d", good, bad); 
      end
 endprogram
+
+module ins_mem_test ( // instruction memory
+	output logic [31:0] instruction,
+	input logic [31:0] address
+);
+	logic [7:0] instruction_tb [39:0]= {
+		8'h12, 8'h34, 8'h56, 8'h78,
+		8'h9a, 8'hbc, 8'hde, 8'hf0,
+		8'h12, 8'h34, 8'h56, 8'h78,
+		8'h9a, 8'hbc, 8'hde, 8'hf0,
+		8'h12, 8'h34, 8'h56, 8'h78,
+		8'h9a, 8'hbc, 8'hde, 8'hf0,
+		8'h12, 8'h34, 8'h56, 8'h78,
+		8'h9a, 8'hbc, 8'hde, 8'hf0,
+		8'h12, 8'h34, 8'h56, 8'h78,
+		8'h9a, 8'hbc, 8'hde, 8'hf0
+	};
+	
+	always_comb begin
+        instruction = {instruction_tb[address+3],instruction_tb[address+2],instruction_tb[address+1],instruction_tb[address]};
+	end
+endmodule

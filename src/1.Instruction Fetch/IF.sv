@@ -8,7 +8,7 @@ module IF (
 	logic [31:0] old_addr;
 	
 	pc program_count(new_addr, old_addr, branch_addr, PCsrc, clk);
-	ins_mem_test code_mem(instruction, new_addr);
+	ins_mem_test code_mem(instruction, old_addr);
 
 	assign old_addr = new_addr;
     
