@@ -40,24 +40,24 @@ program IF_tb (
     assign PCsrc = 1;
     logic [31:0] tb_inst;
 
-    initial begin
-        testing tb;
-        tb = new;
-        for(int i = 0; i < 10; i++) begin
-            branch_addr = i*4;
-            prev_addr = branch_addr;
-            @(posedge clk);
-                tb_inst = {tb.instruction[prev_addr+3],tb.instruction[prev_addr+2],tb.instruction[prev_addr+1],tb.instruction[prev_addr]};
-                if(instruction == tb_inst) begin
-                    good++;
-                    $display("okay :- %0d. for PCsrc = %0b, at address(%0h) instruction != (%0h) vs %0h", i, PCsrc, curr_addr, instruction, tb_inst);
-                end else begin
-                    bad++;
-                    $display("Error :- %0d. for PCsrc = %0b, at address(%0h) instruction != (%0h) vs %0h", i, PCsrc, curr_addr, instruction, tb_inst);
-                end                            
-         end
-         $display("Pass vs Fail :- %0d, %0d", good, bad); 
-     end
+	initial begin
+		testing tb;
+		tb = new;
+		for(int i = 0; i < 10; i++) begin
+			branch_addr = i*4;
+			prev_addr = branch_addr;
+			@(posedge clk);
+				tb_inst = {tb.instruction[prev_addr+3],tb.instruction[prev_addr+2],tb.instruction[prev_addr+1],tb.instruction[prev_addr]};
+				if(instruction == tb_inst) begin
+					good++;
+					$display("okay :- %0d. for PCsrc = %0b, at address(%0h) instruction != (%0h) vs %0h", i, PCsrc, curr_addr, instruction, tb_inst);
+				end else begin
+					bad++;
+					$display("Error :- %0d. for PCsrc = %0b, at address(%0h) instruction != (%0h) vs %0h", i, PCsrc, curr_addr, instruction, tb_inst);
+				end							
+		 end
+		 $display("Pass vs Fail :- %0d, %0d", good, bad); 
+	 end
 endprogram
 
 module ins_mem_test ( // instruction memory

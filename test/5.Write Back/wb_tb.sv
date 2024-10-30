@@ -1,4 +1,4 @@
-module ID_tb_top;
+module WB_tb_top;
 logic [6:0] opcode, func7;
 logic [2:0] func3;
 logic [31:0] r1, r2;
@@ -7,12 +7,12 @@ logic RegWrite;
 logic  [31:0] wb_data;
 logic  [31:0] instruction;
 
-ID_tb tb(.opcode(opcode), .func7(func7), .func3(func3), .r1(r1), .r2(r2), .immediate(immediate), .RegWrite(RegWrite), .wb_data(wb_data), .instruction(instruction));
-ID dut(.opcode(opcode), .func7(func7), .func3(func3), .r1(r1), .r2(r2), .immediate(immediate), .RegWrite(RegWrite), .wb_data(wb_data), .instruction(instruction));
+WB_tb tb(.opcode(opcode), .func7(func7), .func3(func3), .r1(r1), .r2(r2), .immediate(immediate), .RegWrite(RegWrite), .wb_data(wb_data), .instruction(instruction));
+WB dut(.opcode(opcode), .func7(func7), .func3(func3), .r1(r1), .r2(r2), .immediate(immediate), .RegWrite(RegWrite), .wb_data(wb_data), .instruction(instruction));
 
 endmodule
 
-program ID_tb (
+program WB_tb (
     input logic [6:0] opcode, func7,
     input logic [2:0] func3,
     input logic [31:0] r1, r2,

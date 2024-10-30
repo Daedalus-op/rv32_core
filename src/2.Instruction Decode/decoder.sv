@@ -33,16 +33,16 @@ always_comb
          end
         7'b0100011:
         begin     // store
-         funct3=instruction[14:12];
-         rs1=instruction[19:15];
-         rs2=instruction[24:20];
-	 immediate={instruction[31:25],instruction[11:7]};
-        end
-        7'b1100011:
-        begin              
-                 funct3=instruction[14:12];
-                 rs1=instruction[19:15];
-                 rs2=instruction[24:20];
+                funct3=instruction[14:12];
+                rs1=instruction[19:15];
+                rs2=instruction[24:20];
+	            immediate={instruction[31:25],instruction[11:7]};
+		end
+		7'b1100011:
+		begin			  
+				 funct3=instruction[14:12];
+				 rs1=instruction[19:15];
+				 rs2=instruction[24:20];
 		 immediate={instruction[7], instruction[30:25],instruction[11:8]};
         end      
           endcase
