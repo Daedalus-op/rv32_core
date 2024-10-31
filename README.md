@@ -10,13 +10,17 @@
 	- [.] Testing
 - [ ] Instruction Decode
 	- [x] Design
-	- [ ] Testing
-- [ ] Execution
+	- [.] Testing
+- [x] Execution
 	- [x] Design
-	- [ ] Testing
+	- [x] Testing
 - [ ] Memory Access
 	- [x] Design
 	- [ ] Testing
 - [ ] Write Back
 	- [x] Design
 	- [ ] Testing
+
+# TODO
+- [ ] IF stage testing not complete
+- [ ] ID stage bugs
