@@ -1,45 +1,55 @@
 module EX_tb_top;
-logic [6:0] opcode, func7;
-logic [2:0] func3;
-logic [31:0] r1, r2;
-logic [31:0] immediate;
-logic RegWrite;
-logic  [31:0] wb_data;
-logic  [31:0] instruction;
 
-EX_tb tb(.opcode(opcode), .func7(func7), .func3(func3), .r1(r1), .r2(r2), .immediate(immediate), .RegWrite(RegWrite), .wb_data(wb_data), .instruction(instruction));
-EX dut(.opcode(opcode), .func7(func7), .func3(func3), .r1(r1), .r2(r2), .immediate(immediate), .RegWrite(RegWrite), .wb_data(wb_data), .instruction(instruction));
+logic [31:0] AluOut;
+bit zero;
+logic [31:0] pc, rs1, rs2, imm;
+logic [3:0] AluOp;
+bit AluSrc, pc_relative;
+
+EX_tb tb(AluOut, zero, pc, rs1, rs2, imm, AluOp, AluSrc, pc_relative);
+EX dut(AluOut, zero, pc, rs1, rs2, imm, AluOp, AluSrc, pc_relative);
+    
 
 endmodule
 
 program EX_tb (
-    input logic [6:0] opcode, func7,
-    input logic [2:0] func3,
-    input logic [31:0] r1, r2,
-    input logic [31:0] immediate,
-    output logic RegWrite,
-    output logic  [31:0] wb_data,
-    output logic  [31:0] instruction
+    input logic [31:0] AluOut,
+    input bit zero,
+    output logic [31:0] pc, rs1, rs2, imm,
+    output logic [3:0] AluOp,
+    output bit AluSrc, pc_relative
 	);
     int good = 0, bad = 0;
 
     task display;
-        $display("Instruction %h", instruction);
-		$display("Opcode:- %0b", opcode);
-		$display("Func7:- %0b", func7);
-		$display("Func3:- %0b", func3);
-		$display("r1, r2 :- %0b, %0b", r1, r2);
-		$display("imm:- %0b", immediate);
+        $display("AluOut:- %h", AluOut);
+	$display("zero:- %0b", zero);
+	$display("pc, imm :- %0b, %0b", pc, imm);
+	$display("r1, r2 :- %0b, %0b", rs1, rs2);
+	$display("AluSrc, PcRelative :- %0b, %0b", AluSrc, pc_relative);
+	$display("AluOp:- %0b", AluOp);
     endtask
     
     initial begin
         //for(int i = 0; i < 10; i++) begin
-		RegWrite = 1'b0;
-		wb_data = 32'haaed1233;
-		instruction = 32'h00500513; // addi x10 x0 12
+		pc = 32'd8;
+	       	rs1 = 32'd1; 
+		rs2 = 32'd10; 
+		imm = 32'd20;
+
+		AluOp = 4'b0000;
+		AluSrc = 1;
+	       	pc_relative = 0;
 		#10;
 		display;
-		instruction = 32'h00c00533; // add x10 x0 x12
+		AluOp = 4'b0000;
+		AluSrc = 0;
+	       	pc_relative = 1;
+		#10;
+		display;
+		AluOp = 4'b0000;
+		AluSrc = 1;
+	       	pc_relative = 1;
 		#10;
 		display;
 		
