@@ -36,13 +36,38 @@ program ID_tb (
         //for(int i = 0; i < 10; i++) begin
 		RegWrite = 1'b0;
 		wb_data = 32'haaed1233;
-		instruction = 32'h00500513; // addi x10 x0 12
-		#10;
-		display;
+
 		instruction = 32'h00c00533; // add x10 x0 x12
 		#10;
 		display;
+
+		instruction = 32'h00c00513; // add x10 x0 12
+		#10;
+		display;
+
+		instruction = 32'h000230b7; // lui x1, 0x23
+		#10;
+		display;
 		
+		instruction = 32'h0000a083; // lw x1, 0(x1)
+		#10;
+		display;
+
+		instruction = 32'hff1ff06f; // j start
+		#10;
+		display;
+
+		instruction = 32'hfe0006e3; // beq x0, x0, start
+		#10;
+		display;
+
+		instruction = 32'h00032097; // auipc x1, 0x32
+		#10;
+		display;
+
+		instruction = 32'h000080e7; // jalr x1
+		#10;
+		display;
         //end
         $display("Pass vs Fail :- %0d, %0d", good, bad); 
      end
