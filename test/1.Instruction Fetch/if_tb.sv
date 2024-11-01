@@ -1,4 +1,5 @@
-class testing;
+/*
+* class testing;
 static logic [39:0][7:0] instruction = {
 		8'h12, 8'h34, 8'h56, 8'h78,
 		8'h9a, 8'hbc, 8'hde, 8'hf0,
@@ -12,6 +13,18 @@ static logic [39:0][7:0] instruction = {
 		8'h9a, 8'hbc, 8'hde, 8'hf0
 	};
 	
+endclass
+*/
+class testing_1;
+static logic [31:0] instruction [$]= {
+		32'h00002683,
+		32'h00c02023,
+		32'h00b50633,
+		32'h00d00593,
+		32'h00c00513,
+		32'h00000000
+	};
+
 endclass
 
 module IF_tb_top;
@@ -37,11 +50,11 @@ program IF_tb (
     int good = 0, bad = 0;
     logic [31:0] prev_addr;
 
-    assign PCsrc = 1;
+    assign PCsrc = 0;
     logic [31:0] tb_inst;
 
+    testing_1 tb;
 	initial begin
-		testing tb;
 		tb = new;
 		for(int i = 0; i < 10; i++) begin
 			branch_addr = i*4;
@@ -64,6 +77,25 @@ module ins_mem_test ( // instruction memory
 	output logic [31:0] instruction,
 	input logic [31:0] address
 );
+	logic [31:0] instruction_tb [5:0]= {
+		32'h00002683,
+		32'h00c02023,
+		32'h00b50633,
+		32'h00d00593,
+		32'h00c00513,
+		32'h00000000
+	};
+
+	always_comb begin
+		instruction = instruction_tb[address];
+		//instruction = {instruction_tb[address+3],instruction_tb[address+2],instruction_tb[address+1],instruction_tb[address]};
+	end
+endmodule
+/*
+module ins_mem_test ( // instruction memory
+	output logic [31:0] instruction,
+	input logic [31:0] address
+);
 	logic [7:0] instruction_tb [39:0]= {
 		8'h12, 8'h34, 8'h56, 8'h78,
 		8'h9a, 8'hbc, 8'hde, 8'hf0,
@@ -81,3 +113,4 @@ module ins_mem_test ( // instruction memory
         instruction = {instruction_tb[address+3],instruction_tb[address+2],instruction_tb[address+1],instruction_tb[address]};
 	end
 endmodule
+*/

@@ -6,7 +6,7 @@ module pc(
 	input bit clk
 	);
 
-	logic [2:0] offset = 3'd4;
+	logic [2:0] offset = 3'd1;
 	
 	initial new_addr = 32'd0;
 	
