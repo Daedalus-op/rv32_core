@@ -20,7 +20,13 @@ always_comb
                  rs2=instruction[24:20];
                  funct7=instruction[31:25];
              end
-        7'b00000011 || 7'b0010011:        // this is for load and I Type , doubt for shift
+        7'b00000011 :        // this is for load and I Type , doubt for shift
+         begin  
+                 rd=instruction[11:7];
+                 funct3=instruction[14:12];
+                 rs1=instruction[19:15];         
+         end
+         7'b0010011:        // this is for load and I Type , doubt for shift
          begin  
                  rd=instruction[11:7];
                  funct3=instruction[14:12];
@@ -40,12 +46,22 @@ always_comb
                  rs2=instruction[24:20];
 		 immediate={instruction[7], instruction[30:25],instruction[11:8]};
         end      
-        7'b0110111||7'b0010111:
+        7'b0110111:
         begin
                rd=instruction[11:7];
                immediate=instruction[31:12];
         end
-        7'b1101111||7'b1100111:
+        7'b0010111:
+        begin
+               rd=instruction[11:7];
+               immediate=instruction[31:12];
+        end
+        7'b1101111:
+        begin 
+                       rd=instruction[11:7];
+	 immediate={instruction[20], instruction[10:1],instruction[1],instruction[19:12]};
+        end 
+        7'b1100111:
         begin 
                        rd=instruction[11:7];
 	 immediate={instruction[20], instruction[10:1],instruction[1],instruction[19:12]};
