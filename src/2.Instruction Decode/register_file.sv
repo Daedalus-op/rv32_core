@@ -5,7 +5,7 @@ module register (
     input bit RegWrite
 );
     logic [31:0] regarr [31:0];
-    always@(posedge RegWrite) begin
+    always@(RegWrite) begin
         if (RegWrite == 1)
             regarr[rd] <= wdata;
     end
