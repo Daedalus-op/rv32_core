@@ -42,9 +42,9 @@ always_comb begin
 		endcase
 		end
 
-		7'b011_0111 : outs = 11'b1_0; // lui
-		7'b001_0111 : outs = 11'b1_0; // auipc
-		7'b110_1111 : outs = 11'b1_0; // jal
+		7'b011_0111 : outs = 11'b100_0100_0000; // lui
+		7'b001_0111 : outs = 11'b100_0101_0000; // auipc
+		7'b110_1111 : outs = 11'b100_1100_0000; // jal
 		7'b110_0011 : begin // branch
 		case(func3) 
 			3'b000 : outs = 11'b100_010X_0001; // beq 
@@ -68,8 +68,8 @@ always_comb begin
 		case(func3)
 			3'b000  : begin // add or sub
 			case(func7)
-				7'b000_0000 : outs = 11'b1_0000; // add
-				7'b010_0000 : outs = 11'b1_0001; // sub
+				7'b000_0000 : outs = 11'b100_0000_0000; // add
+				7'b010_0000 : outs = 11'b100_0000_0001; // sub
 			endcase
 			end
 
@@ -79,13 +79,13 @@ always_comb begin
 			3'b100 : outs = 11'b1_0001; // xor
 			3'b101 : begin // shift right
 			case(func7)
-				7'b000_0000 : outs = 11'b1_0110; // srl
-				7'b010_0000 : outs = 11'b1_0111; // sra
+				7'b000_0000 : outs = 11'b100_0100_0110; // srl
+				7'b010_0000 : outs = 11'b100_0100_0111; // sra
 			endcase
 			end
 
-			3'b110  : outs = 11'b1_0011; // or
-			3'b111  : outs = 11'b1_0010; // and
+			3'b110  : outs = 11'b100_0100_0011; // or
+			3'b111  : outs = 11'b100_0100_0010; // and
 		endcase
 		end
 		default: outs = 8'b0000_0000;
