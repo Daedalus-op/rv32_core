@@ -1,4 +1,5 @@
 class testing;
+
 static logic [31:0] instruction [$]= {
 		32'h00002683,
 		32'h00c02023,
@@ -8,7 +9,25 @@ static logic [31:0] instruction [$]= {
 		32'h00000000
 	};
 
+/*
+static logic [31:0] instruction [$]= {
+		//32'hx,		// marks the end of instructions
+
+		32'h00352083, 	// addi x10, x3, 0 # starting index
+		32'hfec59ae3, 	// addi x11, x0, 12 # starting number
+		32'h00158593, 	// addi x12, x11, 3 # number of numbers
+                                //   start:
+		32'h00150513, 	// sb x11, 3(x10)
+		32'h00b501a3, 	// addi x10, x10, 1 # increment
+		32'h00358613, 	// addi x11, x11, 1 # increment
+		32'h00c00593, 	// bne x11, x12, start
+		32'h00018513, 	// lw x1, 3(x10)
+
+		32'h00000000  	// start of instructions
+	};	
+*/
 endclass
+
 
 module RV_tb_top;
 logic [31:0] out;
@@ -16,8 +35,8 @@ bit clk;
 
 always #5 clk = ~clk;
 
-RV dut(out, clk);
-RV_tb tb(out, clk);
+RV #(8) dut(out, instruction_tb, clk);
+RV_tb tb(out, instruction_tb, clk);
 
 endmodule
 

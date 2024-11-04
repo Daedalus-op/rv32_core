@@ -17,7 +17,7 @@ module RV (
 	EX u_ex (AluOut, zero,
 		pc, rs1, rs2, immediate, AluOp, AluSrc, Op_sel);
 	MA u_ma(MemData,
-		rs2, AluOut, MemRead, MemWrite);
+		rs2, AluOut, func3, MemRead, MemWrite);
 	WB u_wb(wb_data,
 		AluOut, MemData, MemToReg);
 	assign out = wb_data;
