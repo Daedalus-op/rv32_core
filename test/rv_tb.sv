@@ -23,26 +23,40 @@ static logic [31:0] instruction [$]= {
 		32'h00c00593, 	// bne x11, x12, start
 		32'h00018513, 	// lw x1, 3(x10)
 
+		/* -------------------------------------------------------
+		32'h00352083, 	// lw x1, 3(x10)
+		32'hfec59ae3, 	// bne x11, x12, start
+		32'h00158593, 	// addi x11, x11, 1 # increment
+		32'h00150513, 	// addi x10, x10, 1 # increment
+		32'h00b501a3, 	// sb x11, 3(x10)
+                        //   start:
+		32'h00358613, 	// addi x12, x11, 3 # number of numbers
+		32'h00c00593, 	// addi x11, x0, 12 # starting number
+		32'h00018513, 	// addi x10, x3, 0 # starting index
+		------------------------------------------------------- */
+                                
 		32'h00000000  	// start of instructions
 	};	
-*/
 endclass
 
-
 module RV_tb_top;
+parameter INS = 1 + 8; // Number of instructions
+//localparam INS = $size(testing::instruction);
 logic [31:0] out;
-bit clk;
+logic [31:0] instruction_tb [INS:0];
+bit clk, exit;
 
 always #5 clk = ~clk;
 
-RV #(8) dut(out, instruction_tb, clk);
-RV_tb tb(out, instruction_tb, clk);
+RV #(INS) dut(out, instruction_tb, clk, exit);
+RV_tb #(INS) tb(out, instruction_tb, clk, exit);
 
 endmodule
 
-program RV_tb (
+program RV_tb #(parameter INS = 5) (
 	input logic [31:0] out,
-	input logic clk
+	output logic [31:0] instruction_tb [INS:0],
+	input logic clk, exit
 	);
 
 	int good = 0, bad = 0;
@@ -50,12 +64,14 @@ program RV_tb (
 
 	initial begin
 		tb = new;
-		for(int i = 0; i < tb.instruction.size(); i++) begin
+		instruction_tb = tb.instruction;
+		//for(int i = 0; i < tb.instruction.size(); i++) begin
+		while (!exit) begin
 		@(posedge clk);
 			$display("Output: %0d at %0d", out, $time); 
 		end
 		$display("Pass vs Fail :- %0d, %0d", good, bad); 
-	end
+    end
 endprogram
 
 module ins_mem_test ( // instruction memory

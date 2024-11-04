@@ -12,5 +12,6 @@ module register (
 
 	assign r1 = regarr[rs1];
 	assign r2 = regarr[rs2];
+	assign regarr[3] = 32'h10000000;
 	assign regarr[0] = 0;
 endmodule

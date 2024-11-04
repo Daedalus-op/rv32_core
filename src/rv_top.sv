@@ -15,12 +15,17 @@ module RV (
 	CU u_cu (RegWrite, MemRead, MemWrite,  branch, AluSrc, MemToReg, Op_sel, AluOp,
 		func7, func3, opcode);
 	EX u_ex (AluOut, zero,
-		pc, rs1, rs2, immediate, AluOp, AluSrc, Op_sel);
+		pc, rs1, rs2, immediate, AluOp, AluSrc, OpSel);
 	MA u_ma(MemData,
 		rs2, AluOut, func3, MemRead, MemWrite);
 	WB u_wb(wb_data,
 		AluOut, MemData, MemToReg);
+	Branch u_br(confirm,
+		func3, opcode, AluOut, zero);
+
 	assign out = wb_data;
-	assign pc_branch = zero & branch;
+	assign PcBranch = branch & confirm;
+
+	assign exit = (instruction == 32'haaaaaaaa)? 1'b1 : 1'b0;
 
 endmodule

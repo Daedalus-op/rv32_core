@@ -10,18 +10,18 @@ module MA (
     always@(*) begin
         if (MemRead) begin
             case (func3)
-                3'b000 : rdata <= memarr[address]; // lb
-                3'b001 : rdata <= {memarr[address+1],memarr[address]}; // lh
+                3'b000 : rdata <= {{24{memarr[address][3]}},memarr[address]}; // lb
+                3'b001 : rdata <= {{16{memarr[address+1][3]}},memarr[address+1],memarr[address]}; // lh
                 3'b010 : rdata <= {memarr[address+3],memarr[address+2],memarr[address+1],memarr[address]}; // lw
-                3'b100 : rdata <= memarr[address]; // lbu
-                3'b101 : rdata <= {memarr[address+1],memarr[address]};// lhu
+                3'b100 : rdata <= {24'd0, memarr[address]}; // lbu
+                3'b101 : rdata <= {16'd0, memarr[address+1],memarr[address]};// lhu
             endcase
         end
     
         if (MemWrite) begin
             case(func3)
-                3'b000 : memarr[address] <= wdata; // sb
-                3'b001 : {memarr[address+1],memarr[address]} <= wdata; // sh
+                3'b000 : memarr[address] <= wdata[7:0]; // sb
+                3'b001 : {memarr[address+1],memarr[address]} <= wdata[15:0]; // sh
                 3'b010 : {memarr[address+3],memarr[address+2],memarr[address+1],memarr[address]} <= wdata; // sw
             endcase
         end

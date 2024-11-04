@@ -14,13 +14,17 @@
 - [x] Execution
 	- [x] Design
 	- [x] Testing
-- [ ] Memory Access
+- [x] Memory Access
 	- [x] Design
-	- [ ] Testing
-- [ ] Write Back
+	- [x] Testing
+- [x] Write Back
 	- [x] Design
 	- [ ] Testing
 
 # TODO
-- [ ] IF stage testing not complete
-- [ ] ID stage bugs
+- [ ] J - type
+	- [ ] Check the immExt value concatenation and sign extension
+- [ ] B - type
+	- [ ] Temporarily made address of instruction memory word addressable instead of byte addressible therefore mismatch in addresses from ripes tool
+- [ ] U - type ... test
+	- [ ] Might not work cos of sign extender
