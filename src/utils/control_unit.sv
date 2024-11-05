@@ -5,7 +5,7 @@ module CU (
     input logic [2:0] func3,
     input logic [6:0] opcode
 );
-logic [7:0] outs;
+logic [10:0] outs;
 
 assign {RegWrite, MemRead, MemWrite,
        branch, ALUsrc, MemToReg, OpSel,
@@ -58,9 +58,9 @@ always_comb begin
 
 		7'b010_0011 : begin // store
 		case(func3)
-			3'b000 : outs = 11'b100_101X_0000; // sb
-			3'b001 : outs = 11'b100_101X_0000; // sh
-			3'b010 : outs = 11'b100_101X_0000; // sw
+			3'b000 : outs = 11'b011_0100_0000; // sb
+			3'b001 : outs = 11'b011_0100_0000; // sh
+			3'b010 : outs = 11'b011_0100_0000; // sw
 		endcase
 		end
 

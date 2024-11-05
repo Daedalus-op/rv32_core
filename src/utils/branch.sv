@@ -7,13 +7,13 @@ module Branch(
 	);
 	always_comb begin
 		if (opcode == 7'b110_0011) begin
-			case(func3) 
-				3'b000 : assign confirm = zero; // beq 
-				3'b001 : assign confirm = !zero; // bne 
-				3'b100 : assign confirm = (!zero) & (AluOut < 0); // blt 
-				3'b101 : assign confirm = (AluOut > 0); // bge 
-				3'b110 : assign confirm = (!zero) & (AluOut < 0); // bltu
-				3'b111 : assign confirm = (AluOut < 0); // bgeu
+			case(func3)
+				3'b000 : confirm = zero; // beq
+				3'b001 : confirm = !zero; // bne
+				3'b100 : confirm = (!zero) & (AluOut < 0); // blt
+				3'b101 : confirm = (AluOut > 0); // bge
+				3'b110 : confirm = (!zero) & (AluOut < 0); // bltu
+				3'b111 : confirm = (AluOut < 0); // bgeu
 			endcase
 		end
 	end

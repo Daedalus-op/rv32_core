@@ -3,7 +3,7 @@ module ID (
     output logic [2:0] func3,
     output logic [31:0] r1, r2,
     output logic [31:0] immediate,
-    input logic RegWrite,
+    input logic RegWrite, clk,
     input logic  [31:0] wb_data,
     input logic  [31:0] instruction
 );

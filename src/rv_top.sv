@@ -1,17 +1,18 @@
-module RV (
+module RV #(parameter INS = 5) (
     output logic [31:0] out,
-    input bit clk
+    input logic [31:0] instruction_tb [INS:0],
+    input bit clk, exit
 );
 	logic [6:0] opcode, func7;
 	logic [31:0] instruction, rs1, rs2, immediate, pc, AluOut, wb_data, MemData;
-	logic RegWrite, MemRead, MemWrite, branch, AluSrc, MemToReg, Op_sel, pc_branch, zero;
+	logic RegWrite, MemRead, MemWrite, branch, AluSrc, MemToReg, Op_sel, PcBranch, zero;
 	logic [3:0] AluOp;
 	logic [2:0] func3;
 	logic [4:0] rd;
-	IF u_if (instruction, pc,
-		pc_branch, wb_data, clk);
+	IF #(INS) u_if (instruction, pc,
+		instruction_tb, PcBranch, wb_data, clk);
 	ID u_id (opcode, func7, func3, rs1, rs2, immediate,
-		RegWrite, wb_data, instruction);
+		RegWrite, clk, wb_data, instruction);
 	CU u_cu (RegWrite, MemRead, MemWrite,  branch, AluSrc, MemToReg, Op_sel, AluOp,
 		func7, func3, opcode);
 	EX u_ex (AluOut, zero,

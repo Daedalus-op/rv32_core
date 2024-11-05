@@ -8,5 +8,5 @@ module EX (
     logic [31:0] r1, r2;
     mux mux_imm(r2, AluSrc, rs2, imm);
     mux mux_pc(r1, pc_relative, rs1, pc);
-    alu #(32) alu_unit(AluOut, zero, clk, AluOp, r1, r2);
+    alu #(32) alu_unit(AluOut, zero, AluOp, r1, r2);
 endmodule
