@@ -11,10 +11,10 @@ module Branch(
 			case(func3)
 				3'b000 : confirm = zero; // beq
 				3'b001 : confirm = !zero; // bne
-				3'b100 : confirm = (!zero) & (AluOut < 0); // blt
-				3'b101 : confirm = (AluOut > 0); // bge
-				3'b110 : confirm = (!zero) & (AluOut < 0); // bltu
-				3'b111 : confirm = (AluOut < 0); // bgeu
+				3'b100 : confirm = $signed(AluOut) < 0; // blt
+				3'b101 : confirm = $signed(AluOut) >= 0; // bge
+				3'b110 : confirm = (AluOut) < 0; // bltu
+				3'b111 : confirm = (AluOut) >= 0; // bgeu
 			endcase
 		end
 	end

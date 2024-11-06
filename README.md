@@ -19,10 +19,7 @@
 	- [x] Testing
 - [x] Write Back
 	- [x] Design
-	- [ ] Testing
+	- [x] Testing
 
 # TODO
-- [ ] J - type
-	- [ ] Check the immExt value concatenation and sign extension
-- [ ] U - type ... test
-	- [ ] Might not work cos of sign extender
+- [ ] J - type test
