@@ -24,7 +24,7 @@ always_comb
         end
         7'b1100011: 		// branch
         begin              
-		imm_out[31:0]={19'b0,imm_in[11:0]}; // << 1; {{20{imm_in[11]}},imm_in[11:0]};
+		imm_out[31:0]={{20{imm_in[11]}},imm_in[11:0]}; // << 1; {{20{imm_in[11]}},imm_in[11:0]};
         end      
         7'b0110111:
         begin

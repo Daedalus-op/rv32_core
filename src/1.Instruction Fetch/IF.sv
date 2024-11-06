@@ -1,7 +1,7 @@
 
 module IF #(parameter INS = 5) (
 	output logic [31:0] instruction, new_addr,
-	input logic [31:0] instruction_tb [INS:0],
+	input logic [7:0] instruction_tb [INS*8:0],
 	input bit PCsrc,
 	input logic [31:0] branch_addr,
 	input logic clk

@@ -47,7 +47,7 @@ always_comb
 		funct3=instruction[14:12];
 		rs1=instruction[19:15];
 		rs2=instruction[24:20];
-		immediate={instruction[7], instruction[30:25],instruction[11:8]};
+		immediate={instruction[31], instruction[7], instruction[30:25],instruction[11:8]} << 1;
         end      
         7'b0110111:		// lui
         begin

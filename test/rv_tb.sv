@@ -1,27 +1,27 @@
 class testing;
 
 static logic [31:0] instruction [$]= {
-		32'haaaaaaaa,		// marks the end of instructions
+		32'h00000000,  	// start of instructions
 
 		/* -------------------------------------------------------
-		32'h00002683,
-		32'h00c02023,
-		32'h00b50633,
-		32'h00d00593,
 		32'h00c00513,
-
+		32'h00d00593,
+		32'h00b50633,
+		32'h00c02023,
+		32'h00002683,
 		------------------------------------------------------- */
-		32'h00352083, 	// lw x1, 3(x10)
-		32'hfec59ae3, 	// bne x11, x12, start
-		32'h00158593, 	// addi x11, x11, 1 # increment
-		32'h00150513, 	// addi x10, x10, 1 # increment
-		32'h00b501a3, 	// sb x11, 3(x10)
-                        //   start:
-		32'h00358613, 	// addi x12, x11, 3 # number of numbers
+
+		32'h00000513, 	// addi x10, x0, 0 # starting index
 		32'h00c00593, 	// addi x11, x0, 12 # starting number
-		32'h00018513, 	// addi x10, x3, 0 # starting index
+		32'h00358613, 	// addi x12, x11, 3 # number of numbers
+		//   start:
+		32'h00b501a3, 	// sb x11, 3(x10)
+		32'h00150513, 	// addi x10, x10, 1 # increment
+		32'h00158593, 	// addi x11, x11, 1 # increment
+		32'hfec59ae3, 	// bne x11, x12, start
+		32'h00352083, 	// lw x1, 3(x10)
                                 
-		32'h00000000  	// start of instructions
+		32'h00000000		// marks the end of instructions
 	};	
 endclass
 
@@ -29,7 +29,7 @@ module RV_tb_top;
 parameter INS = 1 + 8; // Number of instructions
 //localparam INS = $size(testing::instruction);
 logic [31:0] out;
-logic [31:0] instruction_tb [INS:0];
+logic [7:0] instruction_tb [INS*8:0];
 bit clk, exit;
 
 always #5 clk = ~clk;
@@ -41,7 +41,7 @@ endmodule
 
 program RV_tb #(parameter INS = 5) (
 	input logic [31:0] out,
-	output logic [31:0] instruction_tb [INS:0],
+	output logic [7:0] instruction_tb [INS*8:0],
 	input logic clk, exit
 	);
 
@@ -50,7 +50,12 @@ program RV_tb #(parameter INS = 5) (
 
 	initial begin
 		tb = new;
-		instruction_tb = tb.instruction;
+		for (int i = 0; i < tb.instruction.size(); i++) begin
+		  instruction_tb[4*i + 3] = tb.instruction[i][31:24];
+		  instruction_tb[4*i + 2] = tb.instruction[i][23:16];
+		  instruction_tb[4*i + 1] = tb.instruction[i][15:8];
+		  instruction_tb[4*i] = tb.instruction[i][7:0];
+        end
 		//for(int i = 0; i < tb.instruction.size(); i++) begin
 		while (!exit) begin
 		@(posedge clk);
@@ -62,11 +67,11 @@ endprogram
 
 module ins_mem_test #(parameter INS = 5) ( // instruction memory
 	output logic [31:0] instruction,
-	input logic [31:0] instruction_tb [INS:0],
+	input logic [7:0] instruction_tb [INS*8:0],
 	input logic [31:0] address
 );
 	always_comb begin
-		instruction = instruction_tb[address];
+		instruction = {instruction_tb[address+3],instruction_tb[address+2],instruction_tb[address+1],instruction_tb[address]};
 		//instruction = {instruction_tb[address+3],instruction_tb[address+2],instruction_tb[address+1],instruction_tb[address]};
 	end
 endmodule

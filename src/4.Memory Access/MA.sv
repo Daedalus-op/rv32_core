@@ -6,7 +6,7 @@ module MA (
     input bit MemRead, MemWrite
 );
     
-    logic [7:0] memarr [1023:0];
+    logic [7:0] memarr [123:0];
     always@(*) begin
         if (MemRead) begin
             case (func3)

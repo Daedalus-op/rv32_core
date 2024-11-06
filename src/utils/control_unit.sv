@@ -17,11 +17,11 @@ always_comb begin
 		7'b110_0111 : outs = 8'b0; // I jump
 		7'b000_0011 : begin  // I load
 		case(func3) 
-			3'b000 : outs = 11'b110_0010_0000; // lb 
-			3'b001 : outs = 11'b110_0010_0000; // lh 
-			3'b010 : outs = 11'b110_0010_0000; // lw 
-			3'b100 : outs = 11'b110_0010_0000; // lbu
-			3'b101 : outs = 11'b110_0010_0000; // lhu
+			3'b000 : outs = 11'b110_0110_0000; // lb 
+			3'b001 : outs = 11'b110_0110_0000; // lh 
+			3'b010 : outs = 11'b110_0110_0000; // lw 
+			3'b100 : outs = 11'b110_0110_0000; // lbu
+			3'b101 : outs = 11'b110_0110_0000; // lhu
 		endcase
 		end
 		7'b001_0011 : begin  // I arithmetic
@@ -47,12 +47,12 @@ always_comb begin
 		7'b110_1111 : outs = 11'b100_1100_0000; // jal
 		7'b110_0011 : begin // branch
 		case(func3) 
-			3'b000 : outs = 11'b100_010X_0001; // beq 
-			3'b001 : outs = 11'b100_010X_0001; // bne 
-			3'b100 : outs = 11'b100_010X_0001; // blt 
-			3'b101 : outs = 11'b100_010X_0001; // bge 
-			3'b110 : outs = 11'b100_010X_0001; // bltu
-			3'b111 : outs = 11'b100_010X_0001; // bgeu
+			3'b000 : outs = 11'b000_1000_0001; // beq 
+			3'b001 : outs = 11'b000_1000_0001; // bne 
+			3'b100 : outs = 11'b000_1000_0001; // blt 
+			3'b101 : outs = 11'b000_1000_0001; // bge 
+			3'b110 : outs = 11'b000_1000_0001; // bltu
+			3'b111 : outs = 11'b000_1000_0001; // bgeu
 		endcase
 		end
 

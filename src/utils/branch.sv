@@ -1,8 +1,9 @@
 module Branch(
 	output logic confirm,
+	output logic [31:0] PcOut,
 	input logic [2:0] func3,
 	input logic [6:0] opcode,
-	input logic [31:0] AluOut,
+	input logic [31:0] AluOut, PcIn, immediate,
 	input logic zero
 	);
 	always_comb begin
@@ -17,4 +18,5 @@ module Branch(
 			endcase
 		end
 	end
+	assign PcOut = PcIn + immediate;
 endmodule

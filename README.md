@@ -7,10 +7,10 @@
 # Status
 - [x] Instruction Fetch
 	- [x] Design
-	- [.] Testing
-- [ ] Instruction Decode
+	- [x] Testing
+- [x] Instruction Decode
 	- [x] Design
-	- [.] Testing
+	- [x] Testing
 - [x] Execution
 	- [x] Design
 	- [x] Testing
@@ -24,7 +24,5 @@
 # TODO
 - [ ] J - type
 	- [ ] Check the immExt value concatenation and sign extension
-- [ ] B - type
-	- [ ] Temporarily made address of instruction memory word addressable instead of byte addressible therefore mismatch in addresses from ripes tool
 - [ ] U - type ... test
 	- [ ] Might not work cos of sign extender
