@@ -1,4 +1,4 @@
-module rca_add #(
+module adder #(
     parameter N = 4
 ) (
     input logic [N-1:0] a,

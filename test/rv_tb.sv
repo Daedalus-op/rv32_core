@@ -13,7 +13,7 @@ static logic [31:0] instruction [$]= {
 
 		32'h00000513, 	// addi x10, x0, 0 # starting index
 		32'h00c00593, 	// addi x11, x0, 12 # starting number
-		32'h00358613, 	// addi x12, x11, 3 # number of numbers
+		32'h00858613, 	// addi x12, x11, 8 # number of numbers
 		//   start:
 		32'h00b501a3, 	// sb x11, 3(x10)
 		32'h00150513, 	// addi x10, x10, 1 # increment

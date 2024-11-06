@@ -73,7 +73,7 @@ program IF_tb (
 	 end
 endprogram
 
-module ins_mem_test ( // instruction memory
+module ins_mem_test_if ( // instruction memory
 	output logic [31:0] instruction,
 	input logic [31:0] address
 );
