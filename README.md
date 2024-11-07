@@ -22,4 +22,3 @@
 	- [x] Testing
 
 # TODO
-- [ ] J - type test

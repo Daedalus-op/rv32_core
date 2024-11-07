@@ -6,7 +6,7 @@ module register (
 );
 	logic [31:0] regarr [31:0];
 	always@(negedge clk) begin
-		if (RegWrite) regarr[rd] <= wdata;
+		if ((RegWrite) & (rd != 0)) regarr[rd] <= wdata;
 	end
 	assign regarr[0] = 'b0;
 

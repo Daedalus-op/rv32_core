@@ -11,7 +11,7 @@ static logic [31:0] instruction [$]= {
 		32'h00b50633,
 		32'h00c02023,
 		32'h00002683,
-
+		
 		// B type testing ---------------
 
 		32'h00000513, 	// addi x10, x0, 0 # starting index
@@ -21,16 +21,22 @@ static logic [31:0] instruction [$]= {
 		32'h00b501a3, 	// sb x11, 3(x10)
 		32'h00150513, 	// addi x10, x10, 1 # increment
 		32'h00158593, 	// addi x11, x11, 1 # increment
-		32'hfec5cae3, 	// blt x11, x12, start
+		32'hfec5cae3, 	// bne x11, x12, start
 		32'hfff50513,   // addi x10, x10, -1
 		32'h00354083, 	// lbu x1, 3(x10)
 
-		// U type testing ---------------
-
-		32'h00000513, 	// addi x10, x0, 0 # starting index
-		32'h00002397,   // aupic x7, 0
+		// U, J type testing ---------------
+		
+		32'h00100393, 	// addi x7, x0, 1 # starting index
+				// start:
+		32'h00138393, 	// addi x7, x7, 1 # starting index
+		32'h00002517,   // aupic x10, 0
 		32'h000122b7,   // lui x5, 0x12
+		32'hff5ff06f,	// j start
 		------------------------------------------------------- */
+		/* -------------------------------------------------------
+		------------------------------------------------------- */
+
                                 
 		32'h00000000		// marks the end of instructions
 	};	
@@ -44,6 +50,7 @@ logic [7:0] instruction_tb [INS*8:0];
 bit clk, exit;
 
 always #5 clk = ~clk;
+initial clk = 1;
 
 RV #(INS) dut(out, instruction_tb, clk, exit);
 RV_tb #(INS) tb(out, instruction_tb, clk, exit);

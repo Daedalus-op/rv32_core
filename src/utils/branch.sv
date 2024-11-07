@@ -7,7 +7,7 @@ module Branch(
 	input logic zero
 	);
 	always_comb begin
-		if (opcode == 7'b110_0011) begin
+		if (opcode == 7'b110_0011) begin // B type
 			case(func3)
 				3'b000 : confirm = zero; // beq
 				3'b001 : confirm = !zero; // bne
@@ -17,6 +17,7 @@ module Branch(
 				3'b111 : confirm = (AluOut) >= 0; // bgeu
 			endcase
 		end
+		if (opcode == 7'b110_1111) confirm = 1; // J type
 	end
 	assign PcOut = PcIn + immediate;
 endmodule

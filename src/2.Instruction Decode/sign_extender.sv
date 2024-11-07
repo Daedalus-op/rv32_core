@@ -24,7 +24,7 @@ always_comb
         end
         7'b1100011: 		// branch
         begin              
-		imm_out[31:0]={{20{imm_in[11]}},imm_in[11:0] << 1};
+		imm_out[31:0]={{20{imm_in[11]}},imm_in[11:0]};
         end
         7'b0110111: // lui
         begin
@@ -34,9 +34,9 @@ always_comb
         begin
 		imm_out[31:0]={{8{imm_in[19]}},imm_in << 12};
         end
-        7'b1101111:
+        7'b1101111: // jal
         begin 
-		imm_out[31:0]={{12{imm_in[19]}},imm_in};    
+		imm_out[31:0]={{12{imm_in[19]}},imm_in << 1};    
         end 
         7'b1100111:
         begin 
