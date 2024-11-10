@@ -1,8 +1,6 @@
 class testing;
 
 static logic [31:0] instruction [$]= {
-		32'h00000000,  	// start of instructions
-
 		/* -------------------------------------------------------
 		// R type testing ---------------
 
@@ -50,7 +48,7 @@ logic [7:0] instruction_tb [INS*8:0];
 bit clk, exit;
 
 always #5 clk = ~clk;
-initial clk = 1;
+initial clk = 0;
 
 RV #(INS) dut(out, instruction_tb, clk, exit);
 RV_tb #(INS) tb(out, instruction_tb, clk, exit);

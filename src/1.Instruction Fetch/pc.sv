@@ -8,7 +8,7 @@ module pc(
 
 	logic [2:0] offset = 3'd4;
 	
-	initial new_addr = 32'd0;
+	initial new_addr = -32'd4;
 	
 	always@(posedge clk) begin
 	   case(PCsrc)
