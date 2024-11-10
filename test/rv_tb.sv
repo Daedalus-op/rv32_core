@@ -43,7 +43,7 @@ static logic [31:0] instruction [$]= {
 endclass
 
 module RV_tb_top;
-parameter INS = 1 + 15; // Number of instructions
+parameter INS = 1 + 61; // Number of instructions
 //localparam INS = $size(testing::instruction);
 logic [31:0] out;
 logic [7:0] instruction_tb [INS*8:0];
@@ -65,14 +65,20 @@ program RV_tb #(parameter INS = 5) (
 
 	int good = 0, bad = 0;
 	testing tb;
+	logic [31:0] ins_mem_file [0:65];
 
 	initial begin
 		tb = new;
-		for (int i = 0; i < tb.instruction.size(); i++) begin
-		  instruction_tb[4*i + 3] = tb.instruction[i][31:24];
-		  instruction_tb[4*i + 2] = tb.instruction[i][23:16];
-		  instruction_tb[4*i + 1] = tb.instruction[i][15:8];
-		  instruction_tb[4*i] = tb.instruction[i][7:0];
+		$readmemh("/home/xubundadu/Desktop/Projects/rv32_core/test/program_dump.hex", ins_mem_file);
+		for (int i = 0; i < INS; i++) begin
+			instruction_tb[4*i + 3] = ins_mem_file[i][31:24];
+			instruction_tb[4*i + 2] = ins_mem_file[i][23:16];
+			instruction_tb[4*i + 1] = ins_mem_file[i][15:8];
+			instruction_tb[4*i]     = ins_mem_file[i][7:0];
+			// instruction_tb[4*i + 3] = tb.instruction[i][31:24];
+			// instruction_tb[4*i + 2] = tb.instruction[i][23:16];
+			// instruction_tb[4*i + 1] = tb.instruction[i][15:8];
+			// instruction_tb[4*i] = tb.instruction[i][7:0];
 		end
 
 		//for(int i = 0; i < tb.instruction.size(); i++) begin
