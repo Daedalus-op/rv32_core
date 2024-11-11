@@ -1,7 +1,8 @@
 module RV #(parameter INS = 5) (
     output logic [31:0] out,
+    output bit exit,
     input logic [7:0] instruction_tb [INS*8:0],
-    input bit clk, exit
+    input bit clk
 );
 	logic [6:0] opcode, func7;
 	logic [31:0] instruction, rs1, rs2, immediate, pc, AluOut, wb_data, MemData, PcOut;

@@ -1,16 +1,14 @@
 class testing;
 
 static logic [31:0] instruction [$]= {
-		/* -------------------------------------------------------
 		// R type testing ---------------
 
-		32'h00c00513,
-		32'h00d00593,
-		32'h00b50633,
-		32'h00c02023,
-		32'h00002683,
+		32'h00800513, // addi x10 x0 8
+		32'h00950593, // addi x11 x10 9
+		32'h40a58633, // sub x12 x11 x10
+		32'h00864693, // xori x13 x12 9
 		
-		------------------------------------------------------- */
+		/* -------------------------------------------------------
 		// B type testing ---------------
 
 		32'h00000513, 	// addi x10, x0, 0 # starting index
@@ -24,6 +22,7 @@ static logic [31:0] instruction [$]= {
 		32'hfff50513,   // addi x10, x10, -1
 		32'h00354083, 	// lbu x1, 3(x10)
 
+		------------------------------------------------------- */
 		/* -------------------------------------------------------
 		// U, J type testing ---------------
 		
@@ -33,8 +32,8 @@ static logic [31:0] instruction [$]= {
 		32'h00002517,   // aupic x10, 0
 		32'h000122b7,   // lui x5, 0x12
 		32'hff5ff06f,	// j start
-		------------------------------------------------------- */
 
+		------------------------------------------------------- */
                                 
 		32'h00000000		// marks the end of instructions
 	};	
@@ -42,7 +41,6 @@ endclass
 
 module RV_tb_top;
 parameter INS = 1 + 61; // Number of instructions
-//localparam INS = $size(testing::instruction);
 logic [31:0] out;
 logic [7:0] instruction_tb [INS*8:0];
 bit clk, exit;
@@ -50,21 +48,22 @@ bit clk, exit;
 always #5 clk = ~clk;
 initial clk = 0;
 
-RV #(INS) dut(out, instruction_tb, clk, exit);
-RV_tb #(INS) tb(out, instruction_tb, clk, exit);
+RV #(INS) dut(out, exit, instruction_tb, clk);
+RV_tb #(INS) tb(out, exit, instruction_tb, clk);
 
 endmodule
 
 program RV_tb #(parameter INS = 5) (
 	input logic [31:0] out,
+	input bit exit,
 	output logic [7:0] instruction_tb [INS*8:0],
-	input logic clk, exit
+	input logic clk
 	);
 
 	int good = 0, bad = 0;
 	testing tb;
 	logic [31:0] ins_mem_file [0:65];
-	logic testSrc = 0; // testbench source (0 for file, 1 for class)
+	logic testSrc = 1; // testbench source (0 for file, 1 for class)
 
 	initial begin
 		tb = new;
@@ -84,7 +83,7 @@ program RV_tb #(parameter INS = 5) (
 			end
 		end
 
-		//for(int i = 0; i < tb.instruction.size(); i++) begin
+		//for(int i = 0; i < 20; i++) begin
 		while (!exit) begin
 		@(posedge clk);
 			$display("Output: %0d at %0d", out, $time); 
