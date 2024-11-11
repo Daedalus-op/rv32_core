@@ -10,6 +10,7 @@ static logic [31:0] instruction [$]= {
 		32'h00c02023,
 		32'h00002683,
 		
+		------------------------------------------------------- */
 		// B type testing ---------------
 
 		32'h00000513, 	// addi x10, x0, 0 # starting index
@@ -23,6 +24,7 @@ static logic [31:0] instruction [$]= {
 		32'hfff50513,   // addi x10, x10, -1
 		32'h00354083, 	// lbu x1, 3(x10)
 
+		/* -------------------------------------------------------
 		// U, J type testing ---------------
 		
 		32'h00100393, 	// addi x7, x0, 1 # starting index
@@ -31,8 +33,6 @@ static logic [31:0] instruction [$]= {
 		32'h00002517,   // aupic x10, 0
 		32'h000122b7,   // lui x5, 0x12
 		32'hff5ff06f,	// j start
-		------------------------------------------------------- */
-		/* -------------------------------------------------------
 		------------------------------------------------------- */
 
                                 
@@ -64,19 +64,24 @@ program RV_tb #(parameter INS = 5) (
 	int good = 0, bad = 0;
 	testing tb;
 	logic [31:0] ins_mem_file [0:65];
+	logic testSrc = 0; // testbench source (0 for file, 1 for class)
 
 	initial begin
 		tb = new;
 		$readmemh("/home/xubundadu/Desktop/Projects/rv32_core/test/program_dump.hex", ins_mem_file);
 		for (int i = 0; i < INS; i++) begin
-			instruction_tb[4*i + 3] = ins_mem_file[i][31:24];
-			instruction_tb[4*i + 2] = ins_mem_file[i][23:16];
-			instruction_tb[4*i + 1] = ins_mem_file[i][15:8];
-			instruction_tb[4*i]     = ins_mem_file[i][7:0];
-			// instruction_tb[4*i + 3] = tb.instruction[i][31:24];
-			// instruction_tb[4*i + 2] = tb.instruction[i][23:16];
-			// instruction_tb[4*i + 1] = tb.instruction[i][15:8];
-			// instruction_tb[4*i] = tb.instruction[i][7:0];
+			if(testSrc == 0) begin
+				instruction_tb[4*i + 3] = ins_mem_file[i][31:24];
+				instruction_tb[4*i + 2] = ins_mem_file[i][23:16];
+				instruction_tb[4*i + 1] = ins_mem_file[i][15:8];
+				instruction_tb[4*i]     = ins_mem_file[i][7:0];
+			end
+			else if(testSrc == 1) begin
+				instruction_tb[4*i + 3] = tb.instruction[i][31:24];
+				instruction_tb[4*i + 2] = tb.instruction[i][23:16];
+				instruction_tb[4*i + 1] = tb.instruction[i][15:8];
+				instruction_tb[4*i] = tb.instruction[i][7:0];
+			end
 		end
 
 		//for(int i = 0; i < tb.instruction.size(); i++) begin
