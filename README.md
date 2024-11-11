@@ -22,3 +22,11 @@
 	- [x] Testing
 
 # TODO
+- Extenstions
+	- [ ] A - Atomics
+	- [ ] M - Muliplication
+	- [ ] F - Single point floating
+	- [ ] D - Double point floating
+	- [ ] G - IMAFD Zicsr Zfencei
+- Multicycle
+- Pipelined
