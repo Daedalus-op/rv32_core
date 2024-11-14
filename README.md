@@ -21,12 +21,16 @@
 	- [x] Design
 	- [x] Testing
 
+# Extensions
+- I - Integer
+
 # TODO
 - Extenstions
-	- [ ] A - Atomics
+- [ ] G - IMAFD 
+	- [ ] Zicsr Zfencei
 	- [ ] M - Muliplication
 	- [ ] F - Single point floating
 	- [ ] D - Double point floating
-	- [ ] G - IMAFD Zicsr Zfencei
+	- [ ] A - Atomics
 - Multicycle
 - Pipelined
