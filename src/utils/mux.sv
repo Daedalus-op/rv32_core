@@ -1,7 +1,7 @@
 module mux #(
 	parameter WIDTH = 32
 	)(
-    output logic [WIDTH-1:0] out,
+	output logic [WIDTH-1:0] out,
 	input logic sel,
 	input logic [WIDTH-1:0] d0,
 	input logic [WIDTH-1:0] d1

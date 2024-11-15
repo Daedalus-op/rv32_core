@@ -35,7 +35,8 @@
 
 module ins_mem ( // instruction memory
 	output logic [31:0] instruction,
-	input logic [31:0] address
+	input logic [31:0] address,
+	input bit del_clk
 );
     parameter INS = 64;
 	logic [7:0] instruction_tb [0:INS*4];
@@ -50,7 +51,7 @@ module ins_mem ( // instruction memory
 	end
 	end
 	
-	always@(address) begin
+	always@(posedge del_clk) begin
         instruction = {instruction_tb[address+3],instruction_tb[address+2],instruction_tb[address+1],instruction_tb[address]};
 	end
 endmodule

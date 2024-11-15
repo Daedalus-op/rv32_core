@@ -6,9 +6,11 @@ module IF (
 	input logic clk
 );
 	logic [31:0] old_addr;
+	bit del_clk; // delayed clock
 	
 	pc program_count(new_addr, old_addr, branch_addr, PCsrc, clk);
-	ins_mem code_mem(instruction, old_addr);
+	mux #(1) buffer(del_clk, clk, 1'b0, 1'b1);
+	ins_mem code_mem(instruction, old_addr, del_clk);
 
 	assign old_addr = new_addr;
     

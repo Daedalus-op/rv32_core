@@ -25,7 +25,7 @@
 - I - Integer
 
 # TODO
-- Extenstions
+- Extensions
 - [ ] G - IMAFD 
 	- [ ] Zicsr Zfencei
 	- [ ] M - Muliplication
