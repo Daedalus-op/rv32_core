@@ -35,18 +35,17 @@ assign {RegWrite, MemRead, MemWrite,
 
 always_comb begin
 	// Check for which opcode
-	case (opcode)
-		7'b110_0111 : outs = 8'b100_1101_01; // I jump
-		7'b000_0011 : outs = 9'b110_0110_00; // Load
-		7'b001_0011 : outs = 9'b100_0100_xx; // I arithmetic
-		7'b011_0111 : outs = 9'b100_0100_00; // lui
-		7'b001_0111 : outs = 9'b100_0101_00; // auipc
-		7'b110_1111 : outs = 9'b100_1100_00; // jal
-		7'b110_0011 : outs = 9'b000_1000_01; // branch
-		7'b010_0011 : outs = 9'b011_0100_00; // store
-		7'b011_0011 : outs = 9'b100_0000_10; // R type
-		default: outs = 9'b000_0000_00;
-	endcase
+	if (opcode == 7'b110_0111) outs = 9'b100_1101_01; // I jump
+	else if (opcode == 7'b000_0011) outs = 9'b110_0110_00; // Load
+	else if (opcode == 7'b001_0011) outs = 9'b100_0100_xx; // I arithmetic
+	else if (opcode == 7'b011_0111) outs = 9'b100_0100_00; // lui
+	else if (opcode == 7'b001_0111) outs = 9'b100_0101_00; // auipc
+	else if (opcode == 7'b110_1111) outs = 9'b100_1100_00; // jal
+	else if (opcode == 7'b110_0011) outs = 9'b000_1000_01; // branch
+	else if (opcode == 7'b010_0011) outs = 9'b011_0100_00; // store
+	else if (opcode == 7'b011_0011) outs = 9'b100_0000_10; // R type
+    else outs = 9'b000_0000_00;
+
 end
     
 endmodule

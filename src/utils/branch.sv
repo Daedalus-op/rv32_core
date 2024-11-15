@@ -17,7 +17,8 @@ module Branch(
 				3'b111 : confirm = (AluOut) >= 0; // bgeu
 			endcase
 		end
-		if (opcode == 7'b110_1111) confirm = 1; // J type
+		else if (opcode == 7'b110_1111) confirm = 1'b1; // J type
+		else confirm = 0;
 	end
 	assign PcOut = PcIn + immediate;
 endmodule

@@ -1,7 +1,6 @@
-module RV #(parameter INS = 5) (
+module RV(
     output logic [31:0] out,
     output bit exit,
-    input logic [7:0] instruction_tb [INS*8:0],
     input bit clk
 );
 	logic [6:0] opcode, func7;
@@ -10,8 +9,8 @@ module RV #(parameter INS = 5) (
 	logic [3:0] AluOp;
 	logic [2:0] func3;
 	logic [4:0] rd;
-	IF #(INS) u_if (instruction, pc,
-		instruction_tb, PcBranch, PcOut, clk);
+	IF u_if (instruction, pc,
+		PcBranch, PcOut, clk);
 	ID u_id (opcode, func7, func3, rs1, rs2, immediate,
 		RegWrite, clk, wb_data, instruction);
 	CU u_cu (RegWrite, MemRead, MemWrite,  branch, AluSrc, MemToReg, PcRelative, AluOp,

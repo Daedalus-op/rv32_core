@@ -3,11 +3,11 @@ module MA (
     input logic [31:0] wdata,
     input logic [31:0] address,
     input logic [2:0] func3, 
-    input bit MemRead, MemWrite
+    input bit MemRead, MemWrite, clk
 );
     
     logic [7:0] memarr [123:0];
-    always@(*) begin
+    always@(clk) begin
         if (MemRead) begin
             case (func3)
                 3'b000 : rdata <= {{24{memarr[address][7]}},memarr[address]}; // lb
@@ -17,7 +17,9 @@ module MA (
                 3'b101 : rdata <= {16'd0, memarr[address+1],memarr[address]};// lhu
             endcase
         end
-    
+    end
+        
+    always@(negedge clk) begin
         if (MemWrite) begin
             case(func3)
                 3'b000 : memarr[address] <= wdata[7:0]; // sb
