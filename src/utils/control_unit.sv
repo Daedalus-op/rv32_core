@@ -44,6 +44,7 @@ always_comb begin
 	else if (opcode == 7'b110_0011) outs = 9'b000_1000_01; // branch
 	else if (opcode == 7'b010_0011) outs = 9'b011_0100_00; // store
 	else if (opcode == 7'b011_0011) outs = 9'b100_0000_10; // R type
+	else if (opcode == 7'b111_0011) outs = 9'b000_0000_11; // ecall / ebreak #TODO implement exit thorugh ecall
     else outs = 9'b000_0000_00;
 
 end
@@ -84,7 +85,7 @@ module AluCU(
 					3'b110  : operation = 4'b0011; // or
 					3'b111  : operation = 4'b0010; //AND
 				endcase
-			2'b11: operation = 4'b0000; //custom (made it I type for now)
+			2'b11: operation = 4'b0000; //custom
 			default:
 				case(func3)
 					3'b000 : operation = 0000; // addi 
