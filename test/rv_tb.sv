@@ -1,21 +1,21 @@
 module RV_tb_top;
 logic [31:0] out;
-bit clk, exit;
+bit clk, exit, outType;
 int count;
 
 always #5 clk = ~clk;
 initial clk = 0;
 
-RV dut(out, exit, clk);
+RV dut(out, exit, outType, clk);
 RV_tb tb(count, out, exit, clk);
 
 endmodule
 
 program RV_tb(
     output int clk_count,
-	input logic [31:0] out,
-	input bit exit,
-	input logic clk
+	  input logic [31:0] out,
+	  input bit exit,
+	  input logic clk
 	);
 
 	int good = 0, bad = 0;
