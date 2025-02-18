@@ -38,11 +38,18 @@ module ins_mem (  // instruction memory
     input logic [31:0] address,
     input bit del_clk
 );
-  parameter int INS = 64;
+  parameter int INS = 4;
   logic [ 7:0] instruction_tb[0 : INS*4];
   logic [31:0] ins_mem_file  [  0 : INS];
+  
+  assign ins_mem_file[0] = 32'h00800513; // addi x10 x0 8
+  assign ins_mem_file[1] = 32'h00950593; // addi x11 x10 9
+  assign ins_mem_file[2] = 32'h40a58633; // sub x12 x11 x10
+  assign ins_mem_file[3] = 32'h00864693; // xori x13 x12 9
+  assign ins_mem_file[4] = 32'h00000000;
+  
   initial begin
-    $readmemh("/home/xubundadu/Desktop/Projects/rv32_core/test/b_type.hex", ins_mem_file);
+    //$readmemh("/home/xubundadu/Desktop/Projects/rv32_core/test/b_type.hex", ins_mem_file);
     for (int i = 0; i < INS; i++) begin
       instruction_tb[4*i+3] = ins_mem_file[i][31:24];
       instruction_tb[4*i+2] = ins_mem_file[i][23:16];
