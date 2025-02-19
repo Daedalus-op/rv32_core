@@ -3,6 +3,10 @@
 >[!Note]
 > - Educational purposes
 > - No specific features yet
+> - The ALU is part of a git submodule
+>   - Do `git clone --recurse-submodules <url>`
+>   - Or place the alu files (from the sys_ver branch in this [repo](https://github.com/Daedalus-op/ALU/tree/sys_ver) ) in `./src/3.Execution/ALU` folder
+>   - Or use the zip file in `./Vivado_Project_Files/RV.zip` as a vivado project
 
 # Status
 - [x] Instruction Fetch
